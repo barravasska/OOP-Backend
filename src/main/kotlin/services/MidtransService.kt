@@ -54,13 +54,11 @@ object MidtransService {
     // Fungsi utama: Buat Snap Token
     suspend fun createSnapToken(orderId: Int, totalAmount: Long, items: List<CartItem>): String? {
 
-        // 1. Siapkan "Authorization" Header
-        // Midtrans pakai Basic Auth (Server Key + ":") di-encode Base64
+
         val authHeader = "Basic " + Base64.getEncoder().encodeToString(
             "$MIDTRANS_SERVER_KEY:".toByteArray()
         )
 
-        // 2. Siapkan Body JSON untuk dikirim ke Midtrans
         val requestBody = MidtransTransactionRequest(
             transactionDetails = MidtransTransactionRequest.TransactionDetails(
                 orderId = "KAFE-ORDER-$orderId-${System.currentTimeMillis()}", // Buat ID unik
@@ -76,7 +74,6 @@ object MidtransService {
             }
         )
 
-        // 3. Panggil API Midtrans pakai Ktor Client
         try {
             val response: HttpResponse = client.post(MIDTRANS_API_URL) {
                 contentType(ContentType.Application.Json)

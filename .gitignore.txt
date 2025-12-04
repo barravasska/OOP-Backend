@@ -1,0 +1,28 @@
+### IDE Files (IntelliJ / VS Code) ###
+.idea/
+*.iml
+.DS_Store
+
+### Build Artifacts ###
+/build/
+/out/
+/libs/
+*.jar
+*.war
+/gradle/wrapper/gradle-wrapper.jar
+
+### Dependencies ###
+/bin/
+/lib/
+/node_modules/
+
+### Local Database & Logs (CRITICAL!) ###
+*.db              # Menghide cafe-db.mv.db atau file database lokal lainnya
+*.trace.db
+*.log
+
+### Gradle / Kotlin Specific ###
+.gradle/
+.kotlin/
+.vscode/
+local.properties

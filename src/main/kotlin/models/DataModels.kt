@@ -62,11 +62,10 @@ data class AdminOrderItem(
     val price: Long
 )
 
-// Data class untuk satu pesanan lengkap yang dikirim ke admin
 @Serializable
 data class AdminOrderResponse(
     val id: Int,
-    val tableNumber: Int?,
+    val tableNumber: Int,
     val status: String,
     val totalAmount: Long,
     val items: List<AdminOrderItem>

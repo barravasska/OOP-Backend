@@ -1,29 +1,28 @@
-// TAMBAHKAN SEMUA IMPORT INI
+// GANTI SELURUH ISI FILE Application.kt DENGAN INI
+
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import plugins.configureSecurity // <-- IMPORT PENTING
+import plugins.*
 
-// Ini adalah fungsi main/utama yang akan dijalankan
 fun main() {
-    val port = System.getenv("PORT")?.toIntOrNull() ?: 8080
-
-    // 2. Jalankan server di port yang sudah ditentukan
-    embeddedServer(Netty, port = port, host = "0.0.0.0", module = Application::module)
+    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
         .start(wait = true)
 }
 
-// Ini adalah "modul" aplikasi kita
-// Ktor akan memanggil fungsi-fungsi konfigurasi dari file lain
 fun Application.module() {
-    // 1. Panggil configureDatabase() dari Databases.kt
+    // 1. Database & Dasar-dasar
     configureDatabase()
-
-    // 2. Panggil configureRouting() dari Routing.kt
-    configureRouting()
-
-    // 3. Panggil configureSerialization() dari Serialization.kt
     configureSerialization()
-
-    // 4. Panggil configureHTTP() dari HTTP.kt (untuk CORS)
     configureHTTP()
+
+    // --- 2. PERUBAHAN KRUSIAL DI SINI ---
+    // SECURITY HARUS DIPASANG DULU
+    configureSecurity()
+    configureWebSocket() // ← Tambahkan ini
+
+
+    // BARU KEMUDIAN ROUTING
+    configureRouting()
 }

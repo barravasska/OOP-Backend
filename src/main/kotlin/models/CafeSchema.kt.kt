@@ -1,4 +1,5 @@
 package models
+
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.dao.id.IntIdTable
 import java.time.LocalDateTime
@@ -18,8 +19,8 @@ object Products : IntIdTable() {
 object Orders : IntIdTable() {
     val totalAmount = long("total_amount")
     val status = varchar("status", 20).default("pending")
-    val tableNumber = integer("table_number") // <-- TAMBAHKAN INI
-    val createdAt = datetime("created_at").default(LocalDateTime.now())
+    val tableNumber = integer("table_number")
+    val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
 }
 
 object OrderItems : IntIdTable("orderitems") {
@@ -27,4 +28,9 @@ object OrderItems : IntIdTable("orderitems") {
     val productId = reference("product_id", Products)
     val quantity = integer("quantity")
     val pricePerItem = long("price_per_item")
+}
+
+object Users : IntIdTable() {
+    val username = varchar("username", 100).uniqueIndex()
+    val passwordHash = varchar("password_hash", 255)
 }
